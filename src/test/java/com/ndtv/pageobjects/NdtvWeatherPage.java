@@ -10,7 +10,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.testvagrant.datacomparator.WeatherDataComparator_NDTV_OpenWeather;
 import com.testvagrant.testsetup.SetupBaseWebDriver;
 
 public class NdtvWeatherPage extends SetupBaseWebDriver {
@@ -49,7 +48,7 @@ public class NdtvWeatherPage extends SetupBaseWebDriver {
 	public List<String> getAllCityNames(){
 		List<String> availableCities = new ArrayList<String>();
 		for(int i=0;i< cityOptions.size();i++) {
-			availableCities.add(cityOptions.get(i).getText());
+			availableCities.add(cityOptions.get(i).getText().replaceAll("\\s", ""));
 			//System.out.println(cityOptions.get(i).getText());
 		}
 		return availableCities;
@@ -69,14 +68,20 @@ public class NdtvWeatherPage extends SetupBaseWebDriver {
 	}
 	
 	public void setCityNameOnSearchBox(String city) throws Exception {
-		if(!availableCityNames.contains(city)) {
-			logger.error("City not in Ndvt Weather Page List of Cities");
-			throw new Exception("City not in Ndvt Weather Page List of Cities");
-		}
-		searchBox.sendKeys(city);
-		if(!driver.findElement(By.id(city)).isSelected()) {
-			driver.findElement(By.id(city)).click();
-		}
+		//for(String cty : availableCityNames) {
+			if(availableCityNames.contains(city)) {
+				searchBox.sendKeys(city);
+				if(!driver.findElement(By.id(city)).isSelected()) {
+					driver.findElement(By.id(city)).click();
+				}
+
+			} else {
+				logger.error("City "+city+ "not in Ndvt Weather Page List of Cities");
+				throw new Exception("City "+city+ "not in Ndvt Weather Page List of Cities");
+			}
+		//}
+
+
 		
 	}
 	

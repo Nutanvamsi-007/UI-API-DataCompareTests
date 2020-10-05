@@ -9,6 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import com.testvagrant.testsetup.SetupExtensionOpenWeatherAPI;
 import com.testvagrant.testsetup.ParamsAUT;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
 import io.restassured.RestAssured;
 
 import static io.restassured.RestAssured.*;
@@ -24,6 +26,8 @@ public class OpeanWeatherResponseDataTest {
 	}
 	
 	@Test
+	@Story("Request to OpenWeatherApi current Data API with a City Name responds with same City Name")
+	@Description("This Test validates City name on response is same as request City Name")
 	void verify_response_byCityName_isOK_hasSameCityName() {
 		
 		given()

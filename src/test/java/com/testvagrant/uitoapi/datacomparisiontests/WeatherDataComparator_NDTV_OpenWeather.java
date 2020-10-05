@@ -1,4 +1,4 @@
-package com.testvagrant.datacomparator;
+package com.testvagrant.uitoapi.datacomparisiontests;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -21,10 +21,14 @@ import com.testvagrant.testsetup.ParamsAUT;
 import com.testvagrant.testsetup.SetupBaseWebDriver;
 import com.testvagrant.testsetup.SetupExtensionOpenWeatherAPI;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
 @ExtendWith(SetupExtensionOpenWeatherAPI.class)
+@Feature("To compare Weather Data provided by Ndtv OpenWeatherAPI")
 public class WeatherDataComparator_NDTV_OpenWeather extends SetupBaseWebDriver{
 	
 	private static final Logger logger = LogManager.getLogger(WeatherDataComparator_NDTV_OpenWeather.class);
@@ -45,13 +49,15 @@ public class WeatherDataComparator_NDTV_OpenWeather extends SetupBaseWebDriver{
 	@BeforeEach
 	void setup() {
 		initialize();
-		homePage = new NdtvHomePage();
-		weatherPage = homePage.accessWeather();
-		//weatherPage = new NdtvWeatherPage();
+		//homePage = new NdtvHomePage();
+		//weatherPage = homePage.accessWeather();
+		weatherPage = new NdtvWeatherPage();
 		RestAssured.basePath=ParamsAUT.getInstance().getValue("api-base-path-weather-data");
 		
 	}
 	
+	@Story("Test Weather reported by Ndtv is close to actual Weather reported by OpenWeatherAPI")
+	@Description("This Test compares City Names and actual Temperature")
 	@ParameterizedTest
 	@CsvFileSource(resources = "/cities.csv", numLinesToSkip = 1)
 	void compare_actualTemperature_ndtvui_openweatherapi_within_givenVariance(String city) throws Exception {
@@ -67,6 +73,8 @@ public class WeatherDataComparator_NDTV_OpenWeather extends SetupBaseWebDriver{
 		}
 	}
 	
+	@Story("Test Weather reported by Ndtv is close to feels-like Weather reported by OpenWeatherAPI")
+	@Description("This Test compares City Names and feels-like Temperature")
 	@ParameterizedTest
 	@CsvFileSource(resources = "/cities.csv", numLinesToSkip = 1)
 	void compare_feelsLikeTemperature_ndtvui_openweatherapi_within_givenVariance(String city) throws Exception {

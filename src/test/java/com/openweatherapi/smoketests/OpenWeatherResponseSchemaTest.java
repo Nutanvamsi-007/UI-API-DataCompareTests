@@ -10,6 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import com.testvagrant.testsetup.ParamsAUT;
 import com.testvagrant.testsetup.SetupExtensionOpenWeatherAPI;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
 import io.restassured.RestAssured;
 
 @ExtendWith(SetupExtensionOpenWeatherAPI.class)
@@ -23,6 +25,8 @@ public class OpenWeatherResponseSchemaTest {
 	}
 	
 	@Test
+	@Story("Request to OpenWeatherApi current Data API with a City Name responds with Key Information")
+	@Description("This Test validates response has City Temperature ")
 	void verify_response_has_keyFields() {
 		given()
 			.params("q", "Bengaluru", "appid",apiKey )

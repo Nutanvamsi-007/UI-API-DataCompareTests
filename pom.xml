@@ -10,6 +10,8 @@
   	<junit.jupiter.version>5.7.0</junit.jupiter.version>
   	<webdrivermanager.version>4.2.2</webdrivermanager.version>
   	<log4j-version>2.12.1</log4j-version>
+  	<allure-junit5.version>2.13.6</allure-junit5.version>
+  	<allure-maven.version>2.9</allure-maven.version>
   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
@@ -76,6 +78,11 @@
 	    <version>1.18.12</version>
 	    <scope>provided</scope>
 	</dependency>
+	<dependency>
+         <groupId>io.qameta.allure</groupId>
+         <artifactId>allure-junit5</artifactId>
+         <version>${allure-junit5.version}</version>
+     </dependency>
   </dependencies>
   <build>
   	<resources>
@@ -102,16 +109,34 @@
 		<plugin>
 			<artifactId>maven-surefire-plugin</artifactId>
 			<version>3.0.0-M5</version>
-			<configuration>
-				<!-- <suiteXmlFiles>
-					<suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
-				</suiteXmlFiles> -->
-				<systemPropertyVariables>
-					<application.properties>/application.properties</application.properties>
-				</systemPropertyVariables>
-				<forkMode>never</forkMode>
-			</configuration>
+			    <configuration>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>io.qameta.allure.junit5.AllureJunit5</value>
+                        </property>
+                    </properties>
+                    <includes>
+                        <include>**/*Test*.java</include>
+                    </includes>
+                    <systemProperties>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${project.basedir}/allure-results</value>
+                        </property>
+                        <property>
+                            <name>junit.jupiter.extensions.autodetection.enabled</name>
+                            <value>true</value>
+                        </property>
+                    </systemProperties>
+                    <reportFormat>plain</reportFormat>
+                </configuration>
 		</plugin>
+        <plugin>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-maven</artifactId>
+            <version>${allure-maven.version}</version>
+        </plugin>
 		<plugin>
 			<artifactId>maven-compiler-plugin</artifactId>
 			<version>3.8.1</version>
