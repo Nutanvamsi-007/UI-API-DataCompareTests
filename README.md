@@ -7,7 +7,7 @@ This repo serves as a Test Framework both Selenium UI and RestAssured API Test S
 
 * Java 1.8 or above (add Java 'bin' directory to Environment 'path' variable)
 
-####  Optional ones are only required if you want to run from an IDE Environment and view Allure Reports
+####  Optional ones are only required if you want to run from an IDE Environment or to view Allure Reports
 
 * Any Java supported IDE
 * Maven (add Maven 'bin' directory to Environment 'path' variable)
@@ -51,7 +51,9 @@ $ mvnw test -Dtest=<TestClassName>#<TestName>
   
 ###   Executing from Java IDE
 
-Import as a Maven Project into the IDE of your choice and RunAs Junit5 Test
+Import as a Maven Project into the IDE of your choice and:
+  * RunAs Junit5 Test
+  * Run 'mvn clean test' or 'mvnw clean test' (mvnw should be preferred)
 
 ## Accessing Allure Reports after Test Execution
 
