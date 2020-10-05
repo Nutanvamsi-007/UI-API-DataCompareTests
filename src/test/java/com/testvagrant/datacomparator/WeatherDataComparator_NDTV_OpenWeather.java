@@ -7,6 +7,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,6 +27,8 @@ import io.restassured.response.Response;
 
 @ExtendWith(SetupExtensionOpenWeatherAPI.class)
 public class WeatherDataComparator_NDTV_OpenWeather extends SetupBaseWebDriver{
+	
+	private static final Logger logger = LogManager.getLogger(WeatherDataComparator_NDTV_OpenWeather.class);
 	
 	private String metricForTest=ParamsAUT.getInstance().getValue("temp-metric");
 	private float variance=Float.parseFloat(ParamsAUT.getInstance().getValue("temp-vairnace"));
@@ -59,7 +63,7 @@ public class WeatherDataComparator_NDTV_OpenWeather extends SetupBaseWebDriver{
 		weatherPage.setCityNameOnSearchBox(city);
 		cityWeatherContainer=weatherPage.getCityTemperaturepDetailsFromContainer(city);
 		cityWeatherUI=cityWeatherContainer.getCityWeatherDetails();
-		//System.out.println(cityWeatherUI.getTempCelcius());
+		logger.info("Ndtv reported "+city+" : "+ cityWeatherUI.getTempCelcius() +"C; "+ cityWeatherUI.getTempFarnhit() +"F;");
 		
 		//OpenWeatherApi Weather Data for City
 		String metric = metricForTest.equalsIgnoreCase("Celsius") ? "metric" :  "imperial";
@@ -75,12 +79,12 @@ public class WeatherDataComparator_NDTV_OpenWeather extends SetupBaseWebDriver{
 		Float temeperature = Float.parseFloat(response.path("main.temp").toString());
 		if(metricForTest.equalsIgnoreCase("Celsius")) {
 			cityWeatherApi.setTempCelcius(temeperature);
-			//System.out.println(cityWeatherApi.getTempCelcius());
+			logger.info("OpenWather reported "+city+" : "+cityWeatherApi.getTempCelcius()+"C;");
 			assertThat(cityWeatherApi.getTempCelcius(), either(is(greaterThan((cityWeatherUI.getTempCelcius()-variance)))).or(is(lessThan((cityWeatherUI.getTempCelcius()+variance)))));
 		}else if(metricForTest.equalsIgnoreCase("Fharenheit")) {
-			cityWeatherApi.setTempCelcius(temeperature);
-			//System.out.println(cityWeatherApi.getTempCelcius());
-			assertThat(cityWeatherApi.getTempCelcius(), either(is(greaterThan((cityWeatherUI.getTempCelcius()-variance)))).or(is(lessThan((cityWeatherUI.getTempFarnhit()+variance)))));
+			cityWeatherApi.setTempFarnhit(temeperature);
+			logger.info("OpenWather reported "+city+" : "+cityWeatherApi.getTempFarnhit()+"F;");
+			assertThat(cityWeatherApi.getTempCelcius(), either(is(greaterThan((cityWeatherUI.getTempFarnhit()-variance)))).or(is(lessThan((cityWeatherUI.getTempFarnhit()+variance)))));
 		}
 	
 	}

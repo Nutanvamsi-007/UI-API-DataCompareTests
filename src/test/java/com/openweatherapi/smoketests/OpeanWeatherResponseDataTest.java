@@ -1,4 +1,4 @@
-package org.openweatherapi.smoketests;
+package com.openweatherapi.smoketests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 

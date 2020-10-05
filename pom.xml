@@ -9,6 +9,7 @@
   	<rest-assured.version>4.3.0</rest-assured.version>
   	<junit.jupiter.version>5.7.0</junit.jupiter.version>
   	<webdrivermanager.version>4.2.2</webdrivermanager.version>
+  	<log4j-version>2.12.1</log4j-version>
   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
@@ -53,6 +54,21 @@
 	    <artifactId>webdrivermanager</artifactId>
 	    <version>${webdrivermanager.version}</version>
 	    <scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.logging.log4j</groupId>
+		<artifactId>log4j-core</artifactId>
+		<version>${log4j-version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.logging.log4j</groupId>
+		<artifactId>log4j-api</artifactId>
+		<version>${log4j-version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.logging.log4j</groupId>
+		<artifactId>log4j-slf4j-impl</artifactId>
+		<version>${log4j-version}</version>
 	</dependency>
 	<dependency>
 	    <groupId>org.projectlombok</groupId>
