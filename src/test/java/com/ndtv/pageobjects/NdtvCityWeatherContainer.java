@@ -37,13 +37,13 @@ public class NdtvCityWeatherContainer extends SetupBaseWebDriver{
 				cityWeather.setCondition(detailsList.get(i).replaceAll("Condition : ", ""));
 			}
 			if(detailsList.get(i).contains("Humidity: ")) {
-				cityWeather.setHumidity(Float.parseFloat(detailsList.get(i).replaceAll("Humidity: ", "").replaceAll("%", "")));		
+				cityWeather.setHumidity(Integer.parseInt(detailsList.get(i).replaceAll("Humidity: ", "").replaceAll("%", "")));		
 			}
 			if(detailsList.get(i).contains("Temp in Degrees: ")) {
-				cityWeather.setTempCelcius(Float.parseFloat(detailsList.get(i).replaceAll("Temp in Degrees: ", "")));
+				cityWeather.setTempCelcius(Double.parseDouble(detailsList.get(i).replaceAll("Temp in Degrees: ", "").replaceAll(" ", "")));
 			}
 			if(detailsList.get(i).contains("Temp in Fahrenheit: ")) {
-				cityWeather.setTempFarnhit(Float.parseFloat(detailsList.get(i).replaceAll("Temp in Fahrenheit: ", "")));
+				cityWeather.setTempFarnhit(Double.parseDouble(detailsList.get(i).replaceAll("Temp in Fahrenheit: ", "").replaceAll(" ", "")));
 			}
 		}
 		return cityWeather;

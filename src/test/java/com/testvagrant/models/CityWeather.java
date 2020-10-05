@@ -7,9 +7,9 @@ public class CityWeather {
 	
 	private String cityName;
 	private String condition;
-	private float tempCelcius;
-	private float tempFarnhit;
-	private float humidity;
+	private double tempCelcius;
+	private double tempFarnhit;
+	private int humidity;
 	
 
 }
