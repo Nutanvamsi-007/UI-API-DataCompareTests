@@ -3,14 +3,19 @@ package com.ndtv.pageobjects;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.testvagrant.datacomparator.WeatherDataComparator_NDTV_OpenWeather;
 import com.testvagrant.testsetup.SetupBaseWebDriver;
 
 public class NdtvWeatherPage extends SetupBaseWebDriver {
+	
+	private static final Logger logger = LogManager.getLogger(NdtvWeatherPage.class);
 	
 	@FindBy(id="searchBox")
 	private WebElement searchBox;
@@ -63,7 +68,11 @@ public class NdtvWeatherPage extends SetupBaseWebDriver {
 		return availableCityNames;
 	}
 	
-	public void setCityNameOnSearchBox(String city) {
+	public void setCityNameOnSearchBox(String city) throws Exception {
+		if(!availableCityNames.contains(city)) {
+			logger.error("City not in Ndvt Weather Page List of Cities");
+			throw new Exception("City not in Ndvt Weather Page List of Cities");
+		}
 		searchBox.sendKeys(city);
 		if(!driver.findElement(By.id(city)).isSelected()) {
 			driver.findElement(By.id(city)).click();

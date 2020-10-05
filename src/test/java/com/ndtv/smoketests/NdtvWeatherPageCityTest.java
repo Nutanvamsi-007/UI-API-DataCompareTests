@@ -30,14 +30,14 @@ public class NdtvWeatherPageCityTest extends SetupBaseWebDriver  {
 	
 	@ParameterizedTest
 	@CsvFileSource(resources = "/cities.csv", numLinesToSkip = 1)
-	void verify_city_available_on_map_with_temperature(String city) {
+	void verify_city_available_on_map_with_temperature(String city) throws Exception {
 		weatherPage.setCityNameOnSearchBox(city);
 		assertTrue(weatherPage.cityWeatherContainerOnMap(city));
 	}
 	
 	@ParameterizedTest
 	@CsvFileSource(resources = "/cities.csv", numLinesToSkip = 1)
-	void verify_clciking_city_on_map_shows_details(String city)  {
+	void verify_clciking_city_on_map_shows_details(String city) throws Exception  {
 		weatherPage.setCityNameOnSearchBox(city);
 		assertTrue(weatherPage.getCityDetailsFromContainer(city).contains(city));
 	}

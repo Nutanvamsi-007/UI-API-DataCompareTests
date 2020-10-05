@@ -54,7 +54,7 @@ public class WeatherDataComparator_NDTV_OpenWeather extends SetupBaseWebDriver{
 	
 	@ParameterizedTest
 	@CsvFileSource(resources = "/cities.csv", numLinesToSkip = 1)
-	void compare_actualTemperature_ndtvui_openweatherapi_within_givenVariance(String city) {
+	void compare_actualTemperature_ndtvui_openweatherapi_within_givenVariance(String city) throws Exception {
 		
 		getCityWeatherFromNdtv(city);
 		getCityWeatherFromOpenAPI(city, "actual-temperature");
@@ -69,7 +69,7 @@ public class WeatherDataComparator_NDTV_OpenWeather extends SetupBaseWebDriver{
 	
 	@ParameterizedTest
 	@CsvFileSource(resources = "/cities.csv", numLinesToSkip = 1)
-	void compare_feelsLikeTemperature_ndtvui_openweatherapi_within_givenVariance(String city) {
+	void compare_feelsLikeTemperature_ndtvui_openweatherapi_within_givenVariance(String city) throws Exception {
 		
 		getCityWeatherFromNdtv(city);
 		getCityWeatherFromOpenAPI(city, "feels-like-temperature");
@@ -82,7 +82,7 @@ public class WeatherDataComparator_NDTV_OpenWeather extends SetupBaseWebDriver{
 		}
 	}
 	
-	void getCityWeatherFromNdtv(String city) {
+	void getCityWeatherFromNdtv(String city) throws Exception {
 		//NDTV Weather Data for City
 		weatherPage.uncheckSelectedCities();
 		weatherPage.setCityNameOnSearchBox(city);
