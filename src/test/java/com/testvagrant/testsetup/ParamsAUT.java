@@ -16,8 +16,10 @@ public class ParamsAUT {
         properties = new Properties();
         FileInputStream filePropsAPI = new FileInputStream(new File("./src/test/resources/application-API.properties"));
         FileInputStream filePropsUI = new FileInputStream(new File("./src/test/resources/application-UI.properties"));
+        FileInputStream filePropsTempVariance = new FileInputStream(new File("./src/test/resources/TemperatureVariance.properties"));
         properties.load(filePropsAPI);
         properties.load(filePropsUI);
+        properties.load(filePropsTempVariance);
 
     }
 

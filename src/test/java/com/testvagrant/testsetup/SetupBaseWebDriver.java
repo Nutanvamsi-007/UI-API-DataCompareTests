@@ -1,22 +1,23 @@
 package com.testvagrant.testsetup;
 
-import org.openqa.selenium.JavascriptExecutor;
+import org.junit.jupiter.api.AfterEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class SetupBaseWebDriver {
 	
-	protected WebDriver driver;
+	protected static WebDriver driver;
 	
-	SetupBaseWebDriver() {
-		
+	protected SetupBaseWebDriver() {
+
+	}
+	
+	public static void initialize() {
 		String targetBrowser=ParamsAUT.getInstance().getValue("browser-name");
 		switch (targetBrowser) {
 			case "Chrome":
@@ -43,36 +44,17 @@ public class SetupBaseWebDriver {
 		
 		driver.manage().window().maximize();
 		driver.get(ParamsAUT.getInstance().getValue("ui-base-url"));
-		waitForPageLoaded();
+		WebDriverUtils.waitForPageLoaded(driver);
 	}
 	
-
-	void close() {
+	@AfterEach
+	public void close() {
 		if(driver!=null) {
 			driver.close();
 			driver.quit();
 		}
 	}
 	
-	void waitForPageLoaded() {
-		ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
-			public Boolean apply(WebDriver driver) {
-				return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString()
-						.equals("complete");
-			}
-		};
-		try {
-			Thread.sleep(1000);
-			WebDriverWait wait = new WebDriverWait(driver, 30);
-			wait.until(expectation);
-		} catch (Throwable error) {
-			System.out.println("Timeout waiting for Page Load Request to complete.");
-		}
-	}
-
-	protected WebDriver getDriver() {
-		return driver;
-	}
 	
 	
 

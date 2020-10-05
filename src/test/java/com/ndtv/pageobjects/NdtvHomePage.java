@@ -1,13 +1,17 @@
 package com.ndtv.pageobjects;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class NdtvHomePage {
+import com.testvagrant.testsetup.SetupBaseWebDriver;
+import com.testvagrant.testsetup.WebDriverUtils;
+
+public class NdtvHomePage extends SetupBaseWebDriver {
 	
-	private WebDriver driver;
+	
+	@FindBy(css=".notnow")
+	private WebElement noThanks;
 
 	@FindBy(id="h_sub_menu")
 	private WebElement subMenu;
@@ -15,9 +19,15 @@ public class NdtvHomePage {
 	@FindBy(linkText="WEATHER")
 	private WebElement weather;
 	
-	public NdtvHomePage(WebDriver driver) {
+	public NdtvHomePage() {
 		PageFactory.initElements(driver, this);
-		this.driver=driver;
+		handleNdtvHomePage();
+	}
+	
+	void handleNdtvHomePage() {
+		if(noThanks.isDisplayed()) {
+			noThanks.click();
+		}
 	}
 	
 	public String getHomePageTitle() {
@@ -32,6 +42,7 @@ public class NdtvHomePage {
 	public NdtvWeatherPage accessWeather() {
 		subMenu.click();
 		weather.click();
-		return new NdtvWeatherPage(driver);
+		WebDriverUtils.waitForPageLoaded(driver);
+		return new NdtvWeatherPage();
 	}
 }

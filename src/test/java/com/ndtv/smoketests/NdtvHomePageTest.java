@@ -3,16 +3,27 @@ package com.ndtv.smoketests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebDriver;
 
 import com.ndtv.pageobjects.NdtvHomePage;
-import com.testvagrant.testsetup.SetupWebDriverNdtv;
+import com.ndtv.pageobjects.NdtvWeatherPage;
+import com.testvagrant.testsetup.SetupBaseWebDriver;
 
-public class NdtvHomePageTest extends SetupWebDriverNdtv {
+public class NdtvHomePageTest extends SetupBaseWebDriver {
 	
-	private WebDriver driver=super.getDriver();
-	NdtvHomePage homePage = new NdtvHomePage(driver);
+	NdtvHomePageTest() {
+		super();
+	}
+
+	NdtvHomePage homePage;
+	NdtvWeatherPage weatherPage;
+	
+	@BeforeEach
+	void setup() {
+		initialize();
+		homePage = new NdtvHomePage();
+	}
 	
 	
 	@Test
