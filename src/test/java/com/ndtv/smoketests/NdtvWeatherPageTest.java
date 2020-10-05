@@ -3,7 +3,6 @@ package com.ndtv.smoketests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.ndtv.pageobjects.NdtvHomePage;

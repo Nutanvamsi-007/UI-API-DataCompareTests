@@ -21,6 +21,9 @@ public class NdtvWeatherPage extends SetupBaseWebDriver {
 	@FindBy(xpath=".//*[@id=\"messages\"]/div[*]/label")
 	private List<WebElement> cityOptions;
 
+	@FindBy(xpath=".//input[@type='checkbox' and @checked='checked']")
+	private List<WebElement> selectedCities;
+	
 	
 	private List<String> availableCityNames;
 	
@@ -47,14 +50,22 @@ public class NdtvWeatherPage extends SetupBaseWebDriver {
 		return availableCities;
 	}
 	
+	public List<String> getSelectedCityNames(){
+		List<String> selectedCitiesNames = new ArrayList<String>();
+		for(int i=0;i< selectedCities.size();i++) {
+			selectedCitiesNames.add(selectedCities.get(i).getText());
+			//System.out.println(selectedCities.get(i).getText());
+		}
+		return selectedCitiesNames;
+	}
+	
 	public List<String> getAvailableCityNames() {
 		return availableCityNames;
 	}
 	
-	public void setCityNameOnSearchBox(String city) throws InterruptedException {
+	public void setCityNameOnSearchBox(String city) {
 		searchBox.sendKeys(city);
 		if(!driver.findElement(By.id(city)).isSelected()) {
-			Thread.sleep(2000);
 			driver.findElement(By.id(city)).click();
 		}
 		
@@ -64,9 +75,23 @@ public class NdtvWeatherPage extends SetupBaseWebDriver {
 		return driver.findElement(By.xpath("//*[@title='"+city+"']")).isDisplayed();
 	}
 	
-	public String getCityTempDetailsFromContainer(String city) {
+	public String getCityDetailsFromContainer(String city) {
 		driver.findElement(By.xpath("//*[@title='"+city+"']")).click();
 		return driver.findElement(By.xpath("//span[contains(text(),'"+city+"')]")).getText();
 	}
+	
+	public void uncheckSelectedCities() {
+		for(int i=0;i< selectedCities.size();i++) {
+				if( selectedCities.get(i).isSelected()) {
+					selectedCities.get(i).click();
+				}
+		}
+	}
+	
+	public NdtvCityWeatherContainer getCityTemperaturepDetailsFromContainer(String city) {
+		driver.findElement(By.xpath("//*[@title='"+city+"']")).click();
+		return new NdtvCityWeatherContainer(city);
+	}
+
 
 }
